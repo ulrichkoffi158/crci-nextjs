@@ -7,6 +7,5 @@ const nextConfig = {
       { protocol: 'https', hostname: 'cdn.sanity.io' },
     ],
   },
-  experimental: { typedRoutes: true },
 }
 module.exports = nextConfig
