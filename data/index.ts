@@ -1,14 +1,23 @@
 // ============================================================
 // CRCI — Fichier de données centralisé
-// Modifiez ce fichier pour mettre à jour tout le contenu du site
+// Modifiez ce fichier pour mettre à jour le contenu fixe du site.
+// Les actualités et la galerie peuvent aussi être gérées dans Sanity (/studio).
 // ============================================================
+
+export const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://crci-nextjs.vercel.app'
+
+/** Site du CIFS, centre de formation de la Croix-Rouge de Côte d'Ivoire */
+export const CIFS_URL = 'https://cifs-site.vercel.app'
+
+export const FOUNDATION_YEAR = 1960
+export const yearsOfService = () => new Date().getFullYear() - FOUNDATION_YEAR
 
 // ---- NAVIGATION ----
 export const NAV_ITEMS = [
   { href: '/', label: 'Accueil' },
   { href: '/qui-sommes-nous', label: 'Qui sommes-nous' },
   { href: '/actualites', label: 'Actualités' },
-  { href: '/formations', label: 'Formations' },
+  { href: CIFS_URL, label: 'Formations', external: true },
   { href: '/galerie', label: 'Galerie' },
   { href: '/volontariat', label: 'Volontariat' },
   { href: '/contact', label: 'Contact' },
@@ -17,98 +26,58 @@ export const NAV_ITEMS = [
 // ---- STATISTIQUES CLÉS ----
 export const STATS = [
   { value: 4200, suffix: '', label: 'Volontaires actifs', description: 'Engagés sur tout le territoire national' },
-  { value: 107, suffix: '', label: 'Comités locaux', description: 'Présents dans chaque région de CI' },
-  { value: 370000, suffix: '+', label: 'Personnes vulnérables', description: 'Assistées en 2025' },
-  { value: 65, suffix: ' ans', label: "D'expérience", description: "Au service de l'humanité depuis 1960" },
+  { value: 107, suffix: '', label: 'Comités locaux', description: "Répartis sur l'ensemble du territoire" },
+  { value: 370000, suffix: '+', label: 'Personnes assistées', description: 'En 2025' },
+  { value: yearsOfService(), suffix: ' ans', label: "D'engagement", description: "Au service de l'humanité depuis 1960" },
 ]
 
-// ---- ARTICLES ----
+// ---- ACTUALITÉS ----
+// Les actualités sont publiées depuis Sanity (/studio). Aucun article fixe.
 export interface Article {
-  id: number
+  id: string
   slug: string
   title: string
   excerpt: string
-  content: string
   category: string
   date: string
-  readTime: number
+  readTime?: string
   image: string
-  author: string
+  author?: string
 }
 
-export const ARTICLES: Article[] = [
-  {
-    id: 1,
-    slug: 'campagne-vaccination-abidjan-2026',
-    title: 'Grande campagne de vaccination contre la rougeole à Abidjan',
-    excerpt: "La Croix-Rouge CI a lancé une vaste campagne de vaccination touchant plus de 15 000 enfants dans les quartiers populaires d'Abidjan.",
-    content: "La Croix-Rouge de Côte d'Ivoire, en partenariat avec le Ministère de la Santé et l'UNICEF, a déployé 120 agents de santé communautaire pour cette campagne historique.",
-    category: 'Santé',
-    date: '2026-02-15',
-    readTime: 4,
-    image: 'https://images.unsplash.com/photo-1584515933487-779824d29309?w=800&q=80',
-    author: 'Direction de la Communication',
-  },
-  {
-    id: 2,
-    slug: 'inondations-yamoussoukro-secours',
-    title: "Intervention d'urgence suite aux inondations à Yamoussoukro",
-    excerpt: 'Nos équipes de secours ont déployé des tentes, vivres et matériel médical pour 500 familles sinistrées à Yamoussoukro.',
-    content: "Face aux inondations dévastatrices qui ont touché la région de Yamoussoukro, la Croix-Rouge CI a mobilisé ses équipes en moins de 24 heures.",
-    category: 'Urgence',
-    date: '2026-02-08',
-    readTime: 3,
-    image: 'https://images.unsplash.com/photo-1504711434969-e33886168f5c?w=800&q=80',
-    author: 'Coordination Secours',
-  },
-  {
-    id: 3,
-    slug: 'formation-psc1-entreprises',
-    title: "300 salariés d'entreprises formés au PSC1 en janvier",
-    excerpt: 'La Croix-Rouge CI a dispensé des formations aux premiers secours civiques à 15 entreprises abidjanaises ce mois-ci.',
-    content: "La formation PSC1 permet à toute personne d'acquérir les gestes qui sauvent en cas d'accident ou de malaise.",
-    category: 'Formation',
-    date: '2026-01-28',
-    readTime: 5,
-    image: 'https://images.unsplash.com/photo-1559757175-0eb30cd8c063?w=800&q=80',
-    author: 'Département Formations,CIFS',
-  },
-  {
-    id: 4,
-    slug: 'distribution-kits-alimentaires-nord',
-    title: 'Distribution de 2 000 kits alimentaires dans le Nord',
-    excerpt: "Opération humanitaire d'envergure dans les régions du Hambol et du Tchologo pour lutter contre l'insécurité alimentaire.",
-    content: "En partenariat avec le PAM, la Croix-Rouge CI a organisé une distribution massive de kits alimentaires dans 12 villages du nord de la Côte d'Ivoire.",
-    category: 'Social',
-    date: '2026-01-20',
-    readTime: 4,
-    image: 'https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?w=800&q=80',
-    author: 'Coordination Programmes',
-  },
-  {
-    id: 5,
-    slug: 'assemblee-generale-2026',
-    title: "Assemblée Générale 2026 : Cap sur la résilience communautaire",
-    excerpt: "L'AG annuelle de la CRCI a réuni plus de 200 représentants des 107 comités locaux pour définir les priorités stratégiques 2026-2030.",
-    content: "Cette assemblée historique a adopté un plan stratégique ambitieux visant à doubler le nombre de volontaires d'ici 2030.",
-    category: 'Institutionnel',
-    date: '2026-01-15',
-    readTime: 6,
-    image: 'https://images.unsplash.com/photo-1515187029135-18ee286d815b?w=800&q=80',
-    author: 'Secrétariat Général',
-  },
-  {
-    id: 6,
-    slug: 'programme-sante-mere-enfant',
-    title: 'Lancement du programme Santé Mère-Enfant dans 5 régions',
-    excerpt: "Un nouveau programme de suivi prénatal et postnatal touche désormais 8 000 mères dans les zones rurales de Côte d'Ivoire.",
-    content: "Le programme Santé Mère-Enfant de la Croix-Rouge CI vise à réduire la mortalité maternelle et infantile dans les zones les plus reculées.",
-    category: 'Santé',
-    date: '2026-01-05',
-    readTime: 5,
-    image: 'https://images.unsplash.com/photo-1559757148-5c350d0d3c56?w=800&q=80',
-    author: 'Département Santé',
-  },
+// ---- DOMAINES D'ACTION (page d'accueil) ----
+export const ACTIONS = [
+  { title: "Secours d'urgence", description: 'Premiers secours, évacuation des victimes et postes de secours lors des urgences et des grands événements.', image: '/images/crci/secours-evacuation.jpg', href: '/qui-sommes-nous#actions' },
+  { title: 'Santé et don de sang', description: 'Promotion de la santé communautaire et mobilisation de donneurs de sang bénévoles.', image: '/images/crci/don-de-sang.jpg', href: '/galerie' },
+  { title: 'Eau, hygiène et assainissement', description: "Accès à l'eau, kits d'hygiène et promotion du lavage des mains, à l'école et dans les communautés.", image: '/images/crci/wash-ecole.jpg', href: '/galerie' },
+  { title: 'Assistance aux ménages vulnérables', description: "Appui aux familles touchées par les crises, notamment par l'assistance monétaire.", image: '/images/crci/assistance-monetaire.jpg', href: '/galerie' },
+  { title: 'Sensibilisation communautaire', description: 'Séances de proximité animées par nos volontaires pour prévenir les risques et informer les populations.', image: '/images/crci/sensibilisation-communautaire.jpg', href: '/galerie' },
+  { title: 'Formation aux premiers secours', description: "Les formations sont assurées par le CIFS, centre de formation de la Croix-Rouge de Côte d'Ivoire.", image: '/images/crci/formation-premiers-secours.jpg', href: CIFS_URL, external: true },
+]
+
+// ---- GALERIE (photos CRCI) ----
+export interface Photo {
+  id: string
+  src: string
+  alt: string
+  category: string
+  caption: string
+  year?: string
+}
+
+export const GALLERY: Photo[] = [
+  { id: 'g1', src: '/images/crci/secours-evacuation.jpg', alt: 'Secouristes CRCI évacuant une victime sur brancard', category: 'Secours', caption: "Évacuation d'une victime par les secouristes" },
+  { id: 'g2', src: '/images/crci/formation-premiers-secours.jpg', alt: 'Exercice de premiers secours', category: 'Formation', caption: 'Formation aux gestes de premiers secours' },
+  { id: 'g3', src: '/images/crci/journee-8-mai.jpg', alt: 'Volontaires CRCI rassemblés le 8 mai', category: 'Vie associative', caption: 'Journée mondiale de la Croix-Rouge, 8 mai' },
+  { id: 'g4', src: '/images/crci/don-de-sang.jpg', alt: 'Prélèvement lors d’une collecte de sang', category: 'Santé', caption: 'Collecte de sang' },
+  { id: 'g5', src: '/images/crci/wash-ecole.jpg', alt: 'Volontaire CRCI et élève au point de lavage des mains', category: 'Eau et hygiène', caption: "Promotion de l'hygiène à l'école" },
+  { id: 'g6', src: '/images/crci/remise-kits-hygiene.jpg', alt: "Remise de kits d'hygiène", category: 'Eau et hygiène', caption: "Remise de kits d'hygiène" },
+  { id: 'g7', src: '/images/crci/wash-kits.jpg', alt: "Volontaires avec kits de lavage des mains", category: 'Eau et hygiène', caption: "Kits d'hygiène pour les communautés" },
+  { id: 'g8', src: '/images/crci/wash-eau.jpg', alt: "Femme portant une bassine d'eau avec une volontaire", category: 'Eau et hygiène', caption: "Accès à l'eau" },
+  { id: 'g9', src: '/images/crci/assistance-monetaire.jpg', alt: 'Enregistrement de bénéficiaires', category: 'Assistance', caption: 'Assistance aux ménages vulnérables' },
+  { id: 'g10', src: '/images/crci/seance-information.jpg', alt: 'Séance d’information avec la population', category: 'Assistance', caption: "Séance d'information des bénéficiaires" },
+  { id: 'g11', src: '/images/crci/sensibilisation-communautaire.jpg', alt: 'Sensibilisation communautaire', category: 'Santé', caption: 'Sensibilisation communautaire' },
+  { id: 'g12', src: '/images/crci/atelier.jpg', alt: 'Participants à un atelier de la CRCI', category: 'Vie associative', caption: "Atelier de la Croix-Rouge de Côte d'Ivoire" },
 ]
 
 // ---- GOUVERNANCE ----
@@ -116,206 +85,130 @@ export const GOVERNANCE = [
   { name: 'Dr. DA Léonce Bruno', role: 'Président National', initials: 'DL' },
   { name: 'Mme. PONGATHIE Sanogo Nathalie épouse Khouadiani', role: '1ère Vice-Présidente', initials: 'PS' },
   { name: 'M. ZANHOUYA Roger Camille', role: '2ème Vice-Président', initials: 'ZR' },
-  { name: "M. YRA Bruno", role: '3ème Vice-Président', initials: 'YB' },
-  { name: 'M.KOUACOU Ebrottié Mathurin', role: 'Trésorier Général Adjoint', initials: 'KE' },
+  { name: 'M. YRA Bruno', role: '3ème Vice-Président', initials: 'YB' },
+  { name: 'M. KOUACOU Ebrottié Mathurin', role: 'Trésorier Général Adjoint', initials: 'KE' },
   { name: 'Dr. DEZAI Paule Marina', role: 'Secrétaire Générale Nationale', initials: 'DP' },
 ]
 
 // ---- TIMELINE HISTORIQUE ----
 export const TIMELINE = [
-  { year: '13 octobre 1960', title: 'Fondation de la CRCI', description: "Création de la Croix-Rouge de Côte d'Ivoire, le 13 octobre 1960, peu après l'indépendance du pays. Reconnue par le Comité International de la Croix-Rouge (CICR) et le Mouvement International de la Croix-Rouge trois ans après sa fondation." },
-  { year: '18 avril 1963', title: 'Reconnaissance officielle par l\'État ivoirien', description: "Par le Décret N°63-169 du 18 avril 1963, l'État ivoirien reconnaît officiellement la CRCI comme organisation d'utilité publique et lui confère le statut d'auxiliaire des pouvoirs publics en matière humanitaire." },
-  { year: '1990', title: 'Programme Santé Communautaire', description: 'Lancement du programme de santé communautaire de base, touchant 150 000 personnes dans les zones rurales.' },
-  { year: '2002', title: 'Crise humanitaire', description: "Lors de la crise ivoirienne, la CRCI assiste plus de 500 000 personnes déplacées avec l'appui du CICR et de la FICR." },
-  { year: '2014', title: 'Riposte Ebola', description: "Déploiement de 200 volontaires pour la sensibilisation et le soutien aux familles dans le cadre de la riposte régionale contre Ebola." },
-  { year: '2020', title: 'COVID-19 — Mobilisation nationale', description: "Campagne nationale de sensibilisation COVID-19 touchant 2 millions de personnes, distribution de kits hygiéniques." },
-  { year: '2024', title: 'Plan stratégique 2024-2030', description: "Adoption d'un plan stratégique ambitieux visant à tripler l'impact humanitaire et à numériser les opérations." },
+  { year: '13 octobre 1960', title: 'Fondation de la CRCI', description: "Création de la Croix-Rouge de Côte d'Ivoire, peu après l'indépendance du pays." },
+  { year: '18 avril 1963', title: "Reconnaissance officielle par l'État", description: "Par le décret N°63-169 du 18 avril 1963, l'État ivoirien reconnaît la CRCI comme auxiliaire des pouvoirs publics dans le domaine humanitaire. La même année, elle rejoint le Mouvement international de la Croix-Rouge et du Croissant-Rouge." },
+  { year: '2002', title: 'Crise ivoirienne', description: "La CRCI se mobilise auprès des populations déplacées, avec l'appui du CICR et de la FICR." },
+  { year: '2014', title: 'Prévention Ebola', description: 'Les volontaires participent à la sensibilisation et à la prévention dans le cadre de la riposte régionale contre Ebola.' },
+  { year: '2020', title: 'COVID-19', description: 'Campagnes nationales de sensibilisation et distribution de kits d’hygiène.' },
 ]
 
-// ---- VALEURS / PRINCIPES ----
+// ---- PRINCIPES FONDAMENTAUX ----
 export const VALUES = [
-  { title: 'Humanité', description: "Prévenir et alléger les souffrances humaines en toutes circonstances." },
-  { title: 'Impartialité', description: "Aucune distinction de nationalité, race, religion ou opinion politique." },
-  { title: 'Neutralité', description: "Ne prend parti pour aucun parti dans les hostilités ou controverses." },
-  { title: 'Indépendance', description: "Autonomie totale pour agir conformément aux principes humanitaires." },
-  { title: 'Volontariat', description: "Mouvement de secours volontaire, guidé par aucun intérêt pécuniaire." },
-  { title: 'Unité', description: "Une seule société nationale de la Croix-Rouge par pays." },
-  { title: 'Universalité', description: "Mouvement mondial aux droits égaux et aux mêmes devoirs." },
-]
-
-// ---- FORMATIONS ----
-export interface Formation {
-  id: number
-  code: string
-  title: string
-  subtitle: string
-  description: string
-  duration: string
-  maxParticipants: number
-  price: string
-  location: string
-  objectives: string[]
-  certification: string
-  nextSessions?: string[]
-}
-
-export const FORMATIONS: Formation[] = [
-  {
-    id: 1,
-    code: 'PSC1',
-    title: 'Premiers Secours Civiques N°1',
-    subtitle: 'Formation de base en secourisme',
-    description: 'Apprenez les gestes qui sauvent : RCP, défibrillation, positions de sécurité, hémorragies. Formation accessible à tous.',
-    duration: '7 heures',
-    maxParticipants: 10,
-    price: '25 000 FCFA',
-    location: 'Siège CRCI, Abidjan',
-    objectives: [
-      'Maîtriser les gestes de réanimation cardio-pulmonaire (RCP)',
-      'Utiliser un défibrillateur automatique externe (DAE)',
-      'Gérer les hémorragies et plaies graves',
-      'Prendre en charge les malaises et inconsciences',
-    ],
-    certification: 'Attestation PSC1 valable 2 ans',
-    nextSessions: ['15 Mars 2026', '29 Mars 2026', '12 Avril 2026'],
-  },
-  {
-    id: 2,
-    code: 'BNS',
-    title: 'Brevet National de Secourisme',
-    subtitle: 'Certification nationale de secouriste',
-    description: 'Formation complète pour devenir secouriste certifié : bilans, gestes, coordination. Prérequis : PSC1 ou équivalent.',
-    duration: '3 jours (24h)',
-    maxParticipants: 12,
-    price: '65 000 FCFA',
-    location: 'Centre de Formation CRCI',
-    objectives: [
-      'Réaliser un bilan complet de victimes',
-      'Coordonner une équipe de secouristes',
-      'Gérer des situations multi-victimes',
-      'Transmettre un bilan aux équipes médicales',
-    ],
-    certification: 'Brevet National de Secourisme CRCI',
-    nextSessions: ['18-20 Mars 2026', '22-24 Avril 2026'],
-  },
-  {
-    id: 3,
-    code: 'SST',
-    title: 'Sauveteur Secouriste du Travail',
-    subtitle: 'Sécurité et secourisme en entreprise',
-    description: 'Formation obligatoire en entreprise. Intervenir efficacement face à un accident du travail ou une maladie professionnelle.',
-    duration: '14 heures (2 jours)',
-    maxParticipants: 10,
-    price: '50 000 FCFA',
-    location: 'Sur site (intra-entreprise disponible)',
-    objectives: [
-      'Détecter les situations dangereuses en milieu professionnel',
-      'Alerter les secours et la hiérarchie',
-      'Secourir la victime en toute sécurité',
-      'Participer à la mise à jour des risques',
-    ],
-    certification: 'Certificat SST — recyclage tous les 2 ans',
-    nextSessions: ['20-21 Mars 2026', '10-11 Avril 2026', '15-16 Mai 2026'],
-  },
-  {
-    id: 4,
-    code: 'EPI',
-    title: 'Équipier de Première Intervention',
-    subtitle: 'Gestion des premières urgences',
-    description: "Formez vos équipes à réagir efficacement lors des premières minutes d'une urgence : incendie, accident, évacuation.",
-    duration: '2 jours (16h)',
-    maxParticipants: 15,
-    price: '45 000 FCFA',
-    location: 'Sur site ou Centre CRCI',
-    objectives: [
-      'Utiliser les extincteurs et équipements de sécurité',
-      "Organiser l'évacuation d'un bâtiment",
-      "Appliquer les procédures d'urgence",
-      'Coordonner avec les pompiers et secours extérieurs',
-    ],
-    certification: 'Attestation EPI CRCI',
-    nextSessions: ['25-26 Mars 2026', '6-7 Mai 2026'],
-  },
-  {
-    id: 5,
-    code: 'SP',
-    title: 'Secourisme Pédiatrique',
-    subtitle: "Urgences chez l'enfant et le nourrisson",
-    description: 'Formation spécialisée pour les parents, enseignants et professionnels de la petite enfance. Gestes adaptés aux enfants.',
-    duration: '7 heures',
-    maxParticipants: 10,
-    price: '30 000 FCFA',
-    location: 'Siège CRCI, Abidjan',
-    objectives: [
-      'Reconnaître les urgences pédiatriques',
-      'Pratiquer la RCP pédiatrique et néonatale',
-      "Gérer les corps étrangers dans les voies aériennes de l'enfant",
-      'Réagir face aux convulsions et chutes',
-    ],
-    certification: 'Attestation Secourisme Pédiatrique CRCI',
-    nextSessions: ['22 Mars 2026', '19 Avril 2026', '17 Mai 2026'],
-  },
-  {
-    id: 6,
-    code: 'HACCP',
-    title: 'Hygiène & Sécurité Alimentaire',
-    subtitle: 'HACCP et bonnes pratiques alimentaires',
-    description: 'Formation aux normes HACCP pour les professionnels de la restauration, agroalimentaire et de la santé communautaire.',
-    duration: '3 jours (21h)',
-    maxParticipants: 20,
-    price: '80 000 FCFA',
-    location: 'Centre de Formation CRCI',
-    objectives: [
-      "Comprendre les principes du système HACCP",
-      "Identifier les points critiques de contrôle alimentaire",
-      "Mettre en place des procédures de nettoyage et désinfection",
-      "Gérer les non-conformités et les crises alimentaires",
-    ],
-    certification: 'Certificat HACCP reconnu par le Ministère du Commerce',
-    nextSessions: ['1-3 Avril 2026', '6-8 Mai 2026'],
-  },
+  { title: 'Humanité', description: 'Prévenir et alléger en toutes circonstances les souffrances des hommes.' },
+  { title: 'Impartialité', description: 'Aucune distinction de nationalité, de race, de religion, de condition sociale ou d’appartenance politique.' },
+  { title: 'Neutralité', description: 'Ne prendre part ni aux hostilités ni aux controverses d’ordre politique, racial, religieux ou idéologique.' },
+  { title: 'Indépendance', description: 'Garder une autonomie qui permette d’agir toujours selon les principes du Mouvement.' },
+  { title: 'Volontariat', description: 'Une institution de secours volontaire et désintéressée.' },
+  { title: 'Unité', description: 'Une seule Société de la Croix-Rouge ou du Croissant-Rouge par pays, ouverte à tous.' },
+  { title: 'Universalité', description: 'Un Mouvement universel, au sein duquel toutes les Sociétés ont des droits égaux.' },
 ]
 
 // ---- DONS ----
 export const DONATION_AMOUNTS = [
-  { amount: 5000, impact: "Fournit des trousses de premiers secours pour 2 familles vulnérables." },
-  { amount: 10000, impact: "Finance la formation aux gestes de premiers secours pour 1 personne." },
-  { amount: 25000, impact: "Permet d'alimenter 5 familles pendant une semaine lors d'une catastrophe." },
-  { amount: 50000, impact: "Équipe un volontaire en matériel de secourisme pour 6 mois de missions." },
-  { amount: 100000, impact: "Finance une campagne de sensibilisation sanitaire dans un village de 500 habitants." },
-  { amount: 500000, impact: "Assure le fonctionnement d'un poste de secours pendant 3 mois complets." },
+  { amount: 5000, impact: 'Contribue à l’achat de trousses de premiers secours.' },
+  { amount: 10000, impact: 'Contribue à former un citoyen aux gestes qui sauvent.' },
+  { amount: 25000, impact: 'Contribue à l’aide d’urgence aux familles sinistrées.' },
+  { amount: 50000, impact: 'Contribue à équiper nos volontaires en matériel de secours.' },
+  { amount: 100000, impact: 'Contribue à une campagne de sensibilisation sanitaire.' },
+  { amount: 500000, impact: 'Contribue au fonctionnement de nos postes de secours.' },
 ]
 
+export const WAVE_INFO = {
+  payUrl: 'https://pay.wave.com/m/M_ci_-7GK5PGhLtHC/c/ci',
+  qrImage: '/images/qr-wave-crci.png',
+}
+
+export const BANK_INFO = {
+  bankName: 'SIB — Société Ivoirienne de Banque',
+  branch: 'Agence Plateau',
+  accountName: 'ASSOCIATION CRCI / CONNECTIK / MOBILISATION DE RESSOURCES',
+  accountType: 'Compte courant',
+  accountNumber: '90000708966043',
+  iban: 'CI93CI0070102590000708966043',
+  bic: 'SIVBCIABXXX',
+  reference: 'DON CRCI',
+  note: 'Indiquez votre nom et la mention « DON CRCI » dans le libellé du virement, puis prévenez-nous avec le formulaire ci-dessous pour recevoir votre reçu.',
+}
+
+/** Affiche un IBAN par groupes de 4 caractères */
+export const formatIban = (iban: string) => iban.replace(/\s+/g, '').replace(/(.{4})/g, '$1 ').trim()
+
 // ---- VOLONTARIAT ----
+// Définitions reprises des Statuts de la Croix-Rouge de Côte d'Ivoire (articles 6 à 14)
 export const VOLUNTEER_CATEGORIES = [
   {
     title: 'Volontaire',
-    description: "Membre actif qui s'engage bénévolement dans les activités et opérations de la Croix-Rouge CI. Aucune cotisation requise.",
-    requirements: ['Âge minimum : 18 ans', 'Formation de base obligatoire', 'Disponibilité régulière'],
+    reference: 'Statuts, art. 12.1',
+    description:
+      "Toute personne qui s'engage de son plein gré, de manière désintéressée, sans chercher un profit ni une récompense matérielle ou financière, dans une action organisée par la Croix-Rouge de Côte d'Ivoire en faveur de la communauté, et qui est enregistrée comme telle auprès de la Société nationale.",
+    requirements: [
+      'Participe aux activités selon sa disponibilité, à titre bénévole',
+      "N'est pas soumis à un contrat de travail",
+      'Ne bénéficie pas du droit de vote et d’éligibilité',
+      "Ne pas avoir fait l'objet d'une condamnation pénale pour crime ou délit",
+    ],
   },
   {
-    title: 'Membre',
-    description: "Adhérent qui soutient la mission de la CRCI par sa cotisation annuelle et peut participer aux activités selon disponibilité.",
-    requirements: ['Cotisation annuelle', 'Participation aux assemblées', 'Soutien aux activités'],
+    title: 'Secouriste',
+    reference: 'Statuts, art. 12.2',
+    description:
+      "Volontaire formé en secourisme, capable — lorsque les conditions sécuritaires le permettent — de poser rapidement et efficacement les gestes qui sauvent en faveur d'une victime en danger physique, et de participer aux opérations de secours en situation de crise et de catastrophes naturelles.",
+    requirements: ['Être volontaire de la Croix-Rouge de Côte d’Ivoire', 'Être formé en secourisme'],
   },
   {
-    title: 'Membre Souscripteur',
-    description: "Membre qui soutient financièrement la Croix-Rouge CI par une contribution régulière supérieure à la cotisation de base.",
-    requirements: ['Contribution mensuelle ou annuelle', 'Accès aux événements spéciaux'],
+    title: 'Membre actif',
+    reference: 'Statuts, art. 6',
+    description:
+      "Toute personne physique qui a accepté de prêter son service à la Croix-Rouge de Côte d'Ivoire et de verser une contribution dont le montant est fixé par l'Assemblée générale, et qui est enregistrée comme telle auprès de l'entité de base dont elle dépend.",
+    requirements: [
+      "Verse la contribution fixée par l'Assemblée générale",
+      "N'est pas soumis à un contrat de travail",
+      "Participe aux délibérations, avec le droit d'élire et d'être élu",
+      'Membre actif dans une seule branche locale à la fois',
+    ],
   },
   {
-    title: 'Membre Honoraire',
-    description: "Titre honorifique décerné par le Comité Directeur National à des personnes ayant rendu des services exceptionnels à la CRCI.",
-    requirements: ['Sur invitation du Comité Directeur', 'Services exceptionnels rendus à la CRCI'],
+    title: "Membre d'honneur",
+    reference: 'Statuts, art. 7',
+    description:
+      "Toute personne physique ou morale à laquelle l'Assemblée générale de la Croix-Rouge de Côte d'Ivoire a conféré ce titre en reconnaissance des services exceptionnels rendus à la Société nationale.",
+    requirements: ["Titre conféré par l'Assemblée générale", 'Sans droit de vote ni d’éligibilité'],
   },
+]
+
+/** Catégories auxquelles on peut postuler via le formulaire */
+export const APPLICATION_CATEGORIES = ['Volontaire', 'Secouriste (volontaire formé en secourisme)', 'Membre actif']
+
+/** Droits des volontaires (Statuts, art. 13) */
+export const VOLUNTEER_RIGHTS = [
+  { title: 'Activités et formations', description: 'Participer aux activités et aux formations organisées par la Société nationale.' },
+  { title: 'Assurance', description: 'Être couvert par une assurance lors des interventions organisées par la Société nationale.' },
+  { title: 'Protection', description: 'Bénéficier d’une protection : sûreté, sécurité, protection contre les abus et le harcèlement.' },
+  { title: 'Participation', description: 'Participer à la définition des tâches et des fonctions dans lesquelles on est impliqué.' },
+]
+
+/** Obligations des volontaires (Statuts, art. 14) */
+export const VOLUNTEER_DUTIES = [
+  'Signer et respecter le code de conduite',
+  'Respecter les Principes fondamentaux et les règlements de la Société nationale, y compris pour l’usage de l’emblème et du logo',
+  'S’abstenir de tout militantisme actif dans les partis ou autres activités politiques',
+  'S’abstenir de tout engagement pouvant nuire à l’image de la Société nationale',
+  'Respecter la confidentialité, notamment dans l’assistance aux personnes vulnérables',
 ]
 
 export const DOMAINES_VOLONTARIAT = [
   "Secours et interventions d'urgence",
   'Santé communautaire et prévention',
-  'Formation et sensibilisation',
+  'Eau, hygiène et assainissement',
   'Action sociale et solidarité',
-  'Collecte de sang et dons',
+  'Collecte de sang',
   'Jeunesse et éducation',
   'Communication et médias',
   'Logistique et administration',
@@ -323,27 +216,15 @@ export const DOMAINES_VOLONTARIAT = [
 
 // ---- CONTACT ----
 export const CONTACT_INFO = {
-  address: "8XCM+2PG, Av. Lamblin, Abidjan — 01 BP 1244 Abidjan 01, Côte d'Ivoire",
-  addressShort: "Av. Lamblin, Abidjan (8XCM+2PG)",
+  address: "Angle du boulevard Botreau-Roussel et de l'avenue Lamblin, Le Plateau — 01 BP 1244 Abidjan 01, Côte d'Ivoire",
+  addressShort: 'Le Plateau, Abidjan',
   phone: '(+225) 27 20 21 72 40',
+  phoneHref: 'tel:+2252720217240',
   fax: '(+225) 27 20 21 72 44',
   email: 'info@croix-rougeci.org',
-  hours: 'Lundi-Vendredi : 8h00 - 17h00',
-  mapsUrl: 'https://maps.google.com/?q=8XCM%2B2PG+Av.+Lamblin+Abidjan',
+  hours: 'Lundi – jeudi : 8h – 17h30 · Vendredi : 8h – 13h',
+  mapsUrl: 'https://maps.google.com/?q=Croix-Rouge+de+C%C3%B4te+d%27Ivoire+si%C3%A8ge+Abidjan',
   social: {
-    facebook: 'https://www.facebook.com/CroixRouge225?locale=fr_FR',
-    twitter: 'https://twitter.com/croixrougeci',
-    instagram: 'https://instagram.com/croixrougeci',
-    youtube: 'https://youtube.com/croixrougeci',
+    facebook: 'https://www.facebook.com/CroixRouge225',
   },
-}
-
-// ---- INFORMATIONS BANCAIRES ----
-export const BANK_INFO = {
-  bankName: 'ORABANK',
-  accountName: 'Croix-Rouge de Côte d\'Ivoire',
-  iban: 'CI93 CI00 5300 1001 0010 5000 510',
-  swift: 'SGCIABAB',
-  reference: 'DON CRCI 2026',
-  note: 'Pour tout virement, merci de préciser votre nom et « DON CRCI » en référence. Un reçu de don vous sera envoyé à info@croix-rougeci.org',
 }

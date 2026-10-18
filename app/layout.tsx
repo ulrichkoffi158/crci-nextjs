@@ -1,23 +1,18 @@
-import type { Metadata } from 'next'
-import { Inter } from 'next/font/google'
+import type { Metadata, Viewport } from 'next'
+import '@fontsource-variable/inter'
+import '@fontsource-variable/plus-jakarta-sans'
 import '@/styles/globals.css'
-import Header from '@/components/layout/Header'
-import Footer from '@/components/layout/Footer'
-
-const inter = Inter({
-  subsets: ['latin'],
-  variable: '--font-inter',
-  display: 'swap',
-})
+import { SITE_URL } from '@/data'
 
 export const metadata: Metadata = {
+  metadataBase: new URL(SITE_URL),
   title: {
     default: "Croix-Rouge de Côte d'Ivoire — Au service de l'humanité depuis 1960",
-    template: '%s | Croix-Rouge CI',
+    template: '%s | Croix-Rouge de Côte d\'Ivoire',
   },
   description:
-    "La Croix-Rouge de Côte d'Ivoire, reconnue par décret N°63-169 du 18 avril 1963, œuvre pour la protection des populations vulnérables à travers 107 comités locaux, 42 000 volontaires et plus de 370 000 personnes impactées en 2025.",
-  keywords: ['Croix-Rouge', "Côte d'Ivoire", 'humanitaire', 'volontariat', 'secourisme', 'santé', 'couverture médicale', 'CRCI', 'Abidjan'],
+    "La Croix-Rouge de Côte d'Ivoire, auxiliaire des pouvoirs publics reconnue par décret N°63-169 du 18 avril 1963, protège et secourt les populations vulnérables grâce à ses volontaires et ses 107 comités locaux.",
+  keywords: ['Croix-Rouge', "Côte d'Ivoire", 'humanitaire', 'volontariat', 'secourisme', 'don', 'CRCI', 'Abidjan'],
   icons: {
     icon: '/images/logo-crci.png',
     apple: '/images/logo-crci-180.png',
@@ -25,20 +20,17 @@ export const metadata: Metadata = {
   openGraph: {
     type: 'website',
     locale: 'fr_CI',
-    url: 'https://croix-rougeci.org',
     siteName: "Croix-Rouge de Côte d'Ivoire",
-    images: [{ url: '/images/logo-crci.png', width: 512, height: 512, alt: "Logo CRCI" }],
+    images: [{ url: '/images/crci/hero-secours.jpg', width: 1536, height: 1024, alt: "Secouristes de la Croix-Rouge de Côte d'Ivoire" }],
   },
 }
 
+export const viewport: Viewport = { themeColor: '#0B1F3A' }
+
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="fr" className={inter.variable}>
-      <body className="min-h-screen flex flex-col antialiased font-sans">
-        <Header />
-        <main className="flex-1">{children}</main>
-        <Footer />
-      </body>
+    <html lang="fr">
+      <body className="min-h-screen antialiased">{children}</body>
     </html>
   )
 }

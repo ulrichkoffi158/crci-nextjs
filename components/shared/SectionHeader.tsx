@@ -13,18 +13,13 @@ export default function SectionHeader({ label, title, description, centered = tr
   return (
     <div className={cn('max-w-3xl mb-12', centered && 'mx-auto text-center', className)}>
       {label && (
-        <span className="inline-block bg-[#ED1C24]/10 text-[#ED1C24] text-xs font-semibold uppercase tracking-widest px-4 py-1.5 rounded-full mb-4">
+        <p className={cn('eyebrow mb-4', centered && 'justify-center', light ? 'text-white/80' : 'text-[#C0181E]')}>
+          <span className="w-6 h-0.5 bg-[#ED1C24] rounded-full" />
           {label}
-        </span>
-      )}
-      <h2 className={cn('text-3xl md:text-4xl font-bold mb-4 text-balance', light ? 'text-white' : 'text-[#2D2D2D]')}>
-        {title}
-      </h2>
-      {description && (
-        <p className={cn('text-lg leading-relaxed', light ? 'text-white/80' : 'text-gray-500')}>
-          {description}
         </p>
       )}
+      <h2 className={cn('text-3xl md:text-4xl font-extrabold mb-4 text-balance', light ? 'text-white' : 'text-navy')}>{title}</h2>
+      {description && <p className={cn('text-lg leading-relaxed', light ? 'text-white/75' : 'text-slate-500')}>{description}</p>}
     </div>
   )
 }

@@ -5,34 +5,35 @@
 @layer base {
   :root {
     --background: 0 0% 100%;
-    --foreground: 0 0% 10%;
+    --foreground: 215 45% 14%;
     --card: 0 0% 100%;
-    --card-foreground: 0 0% 10%;
+    --card-foreground: 215 45% 14%;
     --popover: 0 0% 100%;
-    --popover-foreground: 0 0% 10%;
-    --primary: 358 87% 52%;
+    --popover-foreground: 215 45% 14%;
+    --primary: 358 85% 52%;
     --primary-foreground: 0 0% 100%;
-    --secondary: 0 0% 96%;
-    --secondary-foreground: 0 0% 10%;
-    --muted: 0 0% 96%;
-    --muted-foreground: 0 0% 45%;
-    --accent: 0 0% 96%;
-    --accent-foreground: 0 0% 10%;
+    --secondary: 214 50% 96%;
+    --secondary-foreground: 215 68% 14%;
+    --muted: 214 30% 96%;
+    --muted-foreground: 215 16% 42%;
+    --accent: 214 50% 96%;
+    --accent-foreground: 215 68% 14%;
     --destructive: 0 84% 60%;
     --destructive-foreground: 0 0% 98%;
-    --border: 0 0% 90%;
-    --input: 0 0% 90%;
-    --ring: 358 87% 52%;
-    --radius: 0.5rem;
+    --border: 214 25% 90%;
+    --input: 214 25% 88%;
+    --ring: 215 68% 25%;
+    --radius: 0.75rem;
   }
 }
 
 @layer base {
   * { @apply border-border; }
   body {
-    @apply bg-background text-foreground;
+    @apply bg-background text-foreground font-sans;
     font-feature-settings: "rlig" 1, "calt" 1;
   }
+  h1, h2, h3, h4 { @apply font-display tracking-tight; }
 }
 
 @layer utilities {
@@ -40,19 +41,30 @@
   .section-padding { @apply py-16 md:py-24; }
   .container-crci { @apply container mx-auto px-4 sm:px-6 lg:px-8; }
   .bg-gradient-hero {
-    background: linear-gradient(to bottom, rgba(0,0,0,0.5) 0%, rgba(0,0,0,0.3) 50%, rgba(0,0,0,0.6) 100%);
+    background: linear-gradient(180deg, rgba(6,19,42,0.55) 0%, rgba(6,19,42,0.35) 45%, rgba(6,19,42,0.85) 100%);
   }
   .bg-gradient-card {
-    background: linear-gradient(to top, rgba(0,0,0,0.4) 0%, transparent 60%);
+    background: linear-gradient(to top, rgba(6,19,42,0.55) 0%, transparent 60%);
   }
+  /* Motif discret de croix pour les fonds bleu nuit */
+  .bg-cross-pattern {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='48' height='48' viewBox='0 0 48 48'%3E%3Cpath d='M21 14h6v7h7v6h-7v7h-6v-7h-7v-6h7z' fill='%23ffffff' fill-opacity='0.035'/%3E%3C/svg%3E");
+  }
+  /* Dégradé bleu nuit + motif de croix (les deux dans un même background-image) */
+  .bg-navy-pattern {
+    background-color: #0B1F3A;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='48' height='48' viewBox='0 0 48 48'%3E%3Cpath d='M21 14h6v7h7v6h-7v7h-6v-7h-7v-6h7z' fill='%23ffffff' fill-opacity='0.035'/%3E%3C/svg%3E"),
+      linear-gradient(135deg, #06132A 0%, #0B1F3A 45%, #16365F 100%);
+  }
+  .eyebrow { @apply inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.18em]; }
 }
 
 html { scroll-behavior: smooth; }
 
-::-webkit-scrollbar { width: 6px; }
-::-webkit-scrollbar-track { background: #f5f5f5; }
-::-webkit-scrollbar-thumb { background: #ED1C24; border-radius: 3px; }
-::-webkit-scrollbar-thumb:hover { background: #C0181E; }
+::-webkit-scrollbar { width: 8px; }
+::-webkit-scrollbar-track { background: #f1f4f9; }
+::-webkit-scrollbar-thumb { background: #16365F; border-radius: 4px; }
+::-webkit-scrollbar-thumb:hover { background: #0B1F3A; }
 
 @keyframes fadeUp {
   from { opacity: 0; transform: translateY(20px); }
@@ -64,3 +76,16 @@ html { scroll-behavior: smooth; }
 }
 .animate-fade-up { animation: fadeUp 0.6s ease forwards; }
 .animate-fade-in { animation: fadeIn 0.4s ease forwards; }
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .animate-fade-up, .animate-fade-in, .animate-bounce, .animate-pulse { animation: none !important; }
+}
+
+/* Mise en forme du contenu des articles (Sanity) */
+.prose-crci h2 { @apply text-2xl font-bold text-navy mt-10 mb-3; }
+.prose-crci h3 { @apply text-xl font-bold text-navy mt-8 mb-2; }
+.prose-crci a { @apply text-navy-600 underline underline-offset-2; }
+.prose-crci ul { @apply list-disc pl-6 space-y-1; }
+.prose-crci ol { @apply list-decimal pl-6 space-y-1; }
+.prose-crci blockquote { @apply border-l-4 border-[#ED1C24] pl-4 italic text-navy/80; }

@@ -1,102 +1,83 @@
-import { groq } from '@sanity/client'
-import { client } from './sanity.client'
+import { groq } from 'next-sanity'
+import { client, urlFor } from './sanity.client'
+import type { Article, Photo } from '@/data'
 
-// ─── Types ────────────────────────────────────────────────────────────────────
+// Les données Sanity sont relues toutes les 5 minutes (ISR)
+const REVALIDATE = 300
 
-export type SanityArticle = {
+async function fetchSafe<T>(query: string, params: Record<string, unknown> = {}, fallback: T): Promise<T> {
+  if (!client) return fallback
+  try {
+    return await client.fetch<T>(query, params, { next: { revalidate: REVALIDATE } })
+  } catch (err) {
+    console.error('[sanity] requête échouée :', err)
+    return fallback
+  }
+}
+
+type RawArticle = {
   _id: string
-  slug: { current: string }
+  slug: string
   title: string
   excerpt: string
-  content: any[]
   category: string
   date: string
-  readTime: string
-  author: string
-  image: any
+  readTime?: string
+  author?: string
+  image?: any
+  content?: any[]
 }
 
-export type SanityPhoto = {
-  _id: string
-  alt: string
-  image: any
-  category: string
-  caption: string
-  year: number
-  ordre: number
-}
+export type FullArticle = Article & { content: any[] }
 
-export type SanityFormation = {
-  _id: string
-  code: string
-  title: string
-  subtitle: string
-  description: string
-  duration: string
-  maxParticipants: number
-  price: string
-  location: string
-  objectives: string[]
-  certification: string
-  nextSessions: string[]
-  ordre: number
-}
+const articleFields = groq`_id, "slug": slug.current, title, excerpt, category, date, readTime, author, image`
 
-// ─── Fetchers — retournent [] si Sanity n'est pas configuré ──────────────────
-
-export async function getArticles(): Promise<SanityArticle[]> {
-  if (!client) return []
-  try {
-    return await client.fetch(
-      groq`*[_type == "article"] | order(date desc) {
-        _id, "slug": slug.current, title, excerpt, content,
-        category, date, readTime, author, image
-      }`
-    )
-  } catch {
-    return []
+function toArticle(a: RawArticle): Article {
+  return {
+    id: a._id,
+    slug: a.slug,
+    title: a.title,
+    excerpt: a.excerpt,
+    category: a.category,
+    date: a.date,
+    readTime: a.readTime,
+    author: a.author || "Croix-Rouge de Côte d'Ivoire",
+    image: a.image ? urlFor(a.image).width(1200).height(750).url() : '/images/crci/secours-evacuation.jpg',
   }
 }
 
-export async function getArticle(slug: string): Promise<SanityArticle | null> {
-  if (!client) return null
-  try {
-    return await client.fetch(
-      groq`*[_type == "article" && slug.current == $slug][0] {
-        _id, "slug": slug.current, title, excerpt, content,
-        category, date, readTime, author, image
-      }`,
-      { slug }
-    )
-  } catch {
-    return null
-  }
+export async function getArticles(): Promise<Article[]> {
+  const data = await fetchSafe<RawArticle[]>(
+    groq`*[_type == "article" && defined(slug.current)] | order(date desc) { ${articleFields} }`,
+    {},
+    []
+  )
+  return data.map(toArticle)
 }
 
-export async function getPhotos(): Promise<SanityPhoto[]> {
-  if (!client) return []
-  try {
-    return await client.fetch(
-      groq`*[_type == "photo"] | order(ordre asc, year desc) {
-        _id, alt, image, category, caption, year, ordre
-      }`
-    )
-  } catch {
-    return []
-  }
+export async function getArticle(slug: string): Promise<FullArticle | null> {
+  const a = await fetchSafe<RawArticle | null>(
+    groq`*[_type == "article" && slug.current == $slug][0] { ${articleFields}, content }`,
+    { slug },
+    null
+  )
+  return a ? { ...toArticle(a), content: a.content ?? [] } : null
 }
 
-export async function getFormations(): Promise<SanityFormation[]> {
-  if (!client) return []
-  try {
-    return await client.fetch(
-      groq`*[_type == "formation"] | order(ordre asc) {
-        _id, code, title, subtitle, description, duration,
-        maxParticipants, price, location, objectives,
-        certification, nextSessions, ordre
-      }`
-    )
-  } catch {
-    return []
-  }
+type RawPhoto = { _id: string; alt?: string; image?: any; category?: string; caption?: string; year?: number }
+
+export async function getPhotos(): Promise<Photo[]> {
+  const data = await fetchSafe<RawPhoto[]>(
+    groq`*[_type == "photo" && defined(image)] | order(ordre asc, year desc) { _id, alt, image, category, caption, year }`,
+    {},
+    []
+  )
+  return data.map((p) => ({
+    id: p._id,
+    src: urlFor(p.image).width(1200).url(),
+    alt: p.alt || p.caption || "Photo de la Croix-Rouge de Côte d'Ivoire",
+    category: p.category || 'Divers',
+    caption: p.caption || '',
+    year: p.year ? String(p.year) : undefined,
+  }))
 }

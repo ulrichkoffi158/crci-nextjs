@@ -23,9 +23,6 @@ export default defineConfig({
             S.listItem()
               .title('Galerie photos')
               .child(S.documentTypeList('photo').title('Toutes les photos')),
-            S.listItem()
-              .title('Formations')
-              .child(S.documentTypeList('formation').title('Toutes les formations')),
           ]),
     }),
     visionTool(),

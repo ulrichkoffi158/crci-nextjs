@@ -26,6 +26,17 @@ const config: Config = {
           'gray-pearl': '#E5E7EB',
           gold: '#D4A017',
         },
+        navy: {
+          DEFAULT: '#0B1F3A',
+          50: '#EEF3FA',
+          100: '#D9E3F2',
+          200: '#B3C6E4',
+          600: '#1E4278',
+          700: '#16365F',
+          800: '#102A4C',
+          900: '#0B1F3A',
+          950: '#06132A',
+        },
         border: 'hsl(var(--border))',
         input: 'hsl(var(--input))',
         ring: 'hsl(var(--ring))',
@@ -40,8 +51,8 @@ const config: Config = {
         popover: { DEFAULT: 'hsl(var(--popover))', foreground: 'hsl(var(--popover-foreground))' },
       },
       fontFamily: {
-        sans: ['var(--font-inter)', 'Inter', 'ui-sans-serif', 'system-ui'],
-        display: ['var(--font-inter)', 'Inter', 'ui-sans-serif'],
+        sans: ['"Inter Variable"', 'Inter', 'ui-sans-serif', 'system-ui', 'sans-serif'],
+        display: ['"Plus Jakarta Sans Variable"', '"Inter Variable"', 'ui-sans-serif', 'system-ui', 'sans-serif'],
       },
       borderRadius: {
         lg: 'var(--radius)',
@@ -53,11 +64,13 @@ const config: Config = {
         'card-hover': '0 10px 40px -15px rgba(0,0,0,0.15)',
         crci: '0 4px 14px -4px rgba(237,28,36,0.35)',
         'crci-lg': '0 10px 30px -10px rgba(237,28,36,0.4)',
+        navy: '0 20px 50px -20px rgba(11,31,58,0.45)',
       },
       backgroundImage: {
         'gradient-hero': 'linear-gradient(to bottom, rgba(0,0,0,0.5) 0%, rgba(0,0,0,0.3) 50%, rgba(0,0,0,0.65) 100%)',
         'gradient-card': 'linear-gradient(to top, rgba(0,0,0,0.4) 0%, transparent 60%)',
         'gradient-crci': 'linear-gradient(135deg, #ED1C24 0%, #C0181E 100%)',
+        'gradient-navy': 'linear-gradient(135deg, #06132A 0%, #0B1F3A 45%, #16365F 100%)',
       },
       keyframes: {
         'fade-up': {

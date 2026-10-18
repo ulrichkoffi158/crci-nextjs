@@ -40,10 +40,10 @@ export default function StatCounter({ value, suffix = '', prefix = '', label, de
 
   return (
     <div ref={ref} className={cn('text-center', className)}>
-      <div className={cn('text-4xl md:text-5xl font-bold mb-2', light ? 'text-white' : 'text-[#ED1C24]')}>
+      <div className={cn('font-display text-4xl md:text-5xl font-extrabold mb-2 tracking-tight', light ? 'text-white' : 'text-navy')}>
         {prefix}{count.toLocaleString('fr-FR')}{suffix}
       </div>
-      <div className={cn('font-semibold text-lg mb-1', light ? 'text-white' : 'text-[#2D2D2D]')}>{label}</div>
+      <div className={cn('font-semibold text-lg mb-1', light ? 'text-white' : 'text-navy')}>{label}</div>
       {description && <p className={cn('text-sm', light ? 'text-white/70' : 'text-gray-500')}>{description}</p>}
     </div>
   )
