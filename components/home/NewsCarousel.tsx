@@ -7,7 +7,7 @@ import { ChevronLeft, ChevronRight, Pause, Play, ArrowRight, ArrowUpRight } from
 import { cn } from '@/lib/utils'
 import type { Slide } from '@/lib/sanity.queries'
 
-const DURATION = 6500 // ms par diapositive
+const DURATION = 5000 // ms par diapositive (défilement automatique, comme sur Ubipharm)
 
 const isExternal = (href?: string) => !!href && /^https?:\/\//.test(href)
 
@@ -24,21 +24,19 @@ export default function NewsCarousel({ slides }: { slides: Slide[] }) {
   const total = slides.length
   const [current, setCurrent] = useState(0)
   const [playing, setPlaying] = useState(true)
-  const [hovered, setHovered] = useState(false)
   const [reduced, setReduced] = useState(false)
   const touchX = useRef<number | null>(null)
 
   useEffect(() => {
     const mq = window.matchMedia('(prefers-reduced-motion: reduce)')
-    setReduced(mq.matches)
-    if (mq.matches) setPlaying(false)
+    setReduced(mq.matches) // mouvement réduit : pas d'effet de zoom, mais le défilement continue
   }, [])
 
   const go = useCallback((i: number) => setCurrent(((i % total) + total) % total), [total])
   const next = useCallback(() => go(current + 1), [current, go])
   const prev = useCallback(() => go(current - 1), [current, go])
 
-  const running = playing && !hovered && total > 1
+  const running = playing && total > 1
   useEffect(() => {
     if (!running) return
     const t = setTimeout(next, DURATION)
@@ -52,10 +50,6 @@ export default function NewsCarousel({ slides }: { slides: Slide[] }) {
       aria-roledescription="carrousel"
       aria-label="À la une"
       className="relative flex rounded-3xl overflow-hidden shadow-navy bg-navy-950"
-      onMouseEnter={() => setHovered(true)}
-      onMouseLeave={() => setHovered(false)}
-      onFocus={() => setHovered(true)}
-      onBlur={() => setHovered(false)}
       onKeyDown={(e) => { if (e.key === 'ArrowRight') next(); if (e.key === 'ArrowLeft') prev() }}
     >
       {/* Barre de contrôle verticale */}
