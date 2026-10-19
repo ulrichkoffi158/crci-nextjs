@@ -6,7 +6,7 @@ import { ACTIONS } from '@/data'
 
 export default function ActionsSection() {
   return (
-    <section className="section-padding bg-white">
+    <section className="section-padding bg-navy-50/60">
       <div className="container-crci">
         <SectionHeader label="Nos actions" title="Sur le terrain, au plus près des communautés"
           description="Nos volontaires interviennent chaque jour dans tout le pays, des secours d'urgence à la prévention." />

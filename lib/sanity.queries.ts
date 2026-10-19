@@ -81,3 +81,42 @@ export async function getPhotos(): Promise<Photo[]> {
     year: p.year ? String(p.year) : undefined,
   }))
 }
+
+// ─── Bannières « À la une » ──────────────────────────────────────────────────
+export type Slide = {
+  id: string
+  title: string
+  subtitle?: string
+  description?: string
+  image?: string
+  imageAlt?: string
+  imageOnly?: boolean
+  href?: string
+  cta?: string
+}
+
+type RawBanner = {
+  _id: string; titre: string; sousTitre?: string; description?: string; image?: any
+  imageSeule?: boolean; lien?: string; libelleBouton?: string
+}
+
+export async function getBanners(): Promise<Slide[]> {
+  const data = await fetchSafe<RawBanner[]>(
+    groq`*[_type == "banniere" && actif != false && (!defined(dateFin) || dateFin >= now())] | order(ordre asc, _createdAt desc) {
+      _id, titre, sousTitre, description, image, imageSeule, lien, libelleBouton
+    }`,
+    {},
+    []
+  )
+  return data.map((b) => ({
+    id: b._id,
+    title: b.titre,
+    subtitle: b.sousTitre,
+    description: b.description,
+    image: b.image ? urlFor(b.image).width(2000).url() : undefined,
+    imageAlt: b.image?.alt || b.titre,
+    imageOnly: Boolean(b.imageSeule && b.image),
+    href: b.lien,
+    cta: b.libelleBouton || 'En savoir plus',
+  }))
+}

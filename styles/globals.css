@@ -89,3 +89,5 @@ html { scroll-behavior: smooth; }
 .prose-crci ul { @apply list-disc pl-6 space-y-1; }
 .prose-crci ol { @apply list-decimal pl-6 space-y-1; }
 .prose-crci blockquote { @apply border-l-4 border-[#ED1C24] pl-4 italic text-navy/80; }
+
+@keyframes crci-progress { from { transform: scaleX(0); } to { transform: scaleX(1); } }

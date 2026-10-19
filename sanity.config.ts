@@ -18,6 +18,9 @@ export default defineConfig({
           .title('Contenu')
           .items([
             S.listItem()
+              .title('Bannières « À la une » (accueil)')
+              .child(S.documentTypeList('banniere').title('Bannières')),
+            S.listItem()
               .title('Actualités')
               .child(S.documentTypeList('article').title('Tous les articles')),
             S.listItem()

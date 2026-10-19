@@ -45,6 +45,47 @@ export interface Article {
   author?: string
 }
 
+// ---- CARROUSEL « À LA UNE » (accueil) ----
+// Diapositives par défaut. Les bannières publiées dans Sanity s'affichent avant elles.
+export const HOME_SLIDES = [
+  {
+    id: 'don-wave',
+    title: 'Un don en quelques secondes avec Wave',
+    subtitle: 'Scannez, donnez, sauvez des vies',
+    description: 'Payez par Wave ou par virement bancaire, puis prévenez-nous pour recevoir votre reçu de don.',
+    image: '/images/crci/remise-kits-hygiene.jpg',
+    href: '/dons',
+    cta: 'Je fais un don',
+  },
+  {
+    id: 'volontariat',
+    title: 'Rejoignez nos 4 200 volontaires',
+    subtitle: 'Engagez-vous près de chez vous',
+    description: "107 comités locaux vous accueillent partout en Côte d'Ivoire. Votre candidature en ligne prend 3 minutes.",
+    image: '/images/crci/journee-8-mai.jpg',
+    href: '/volontariat',
+    cta: 'Je deviens volontaire',
+  },
+  {
+    id: 'cifs',
+    title: 'Apprenez les gestes qui sauvent',
+    subtitle: 'Formations aux premiers secours avec le CIFS',
+    description: "Entreprises, écoles, particuliers : le centre de formation de la Croix-Rouge de Côte d'Ivoire vous forme, en salle et bientôt en ligne.",
+    image: '/images/crci/formation-premiers-secours.jpg',
+    href: CIFS_URL,
+    cta: 'Voir les formations',
+  },
+  {
+    id: 'partenariat',
+    title: 'Entreprises, agissons ensemble',
+    subtitle: 'Devenez partenaire de la Croix-Rouge',
+    description: 'Mécénat, couverture médicale de vos événements, formation de vos équipes : construisons un partenariat utile.',
+    image: '/images/crci/assistance-monetaire.jpg',
+    href: '/contact?sujet=partenariat',
+    cta: 'Nous contacter',
+  },
+]
+
 // ---- DOMAINES D'ACTION (page d'accueil) ----
 export const ACTIONS = [
   { title: "Secours d'urgence", description: 'Premiers secours, évacuation des victimes et postes de secours lors des urgences et des grands événements.', image: '/images/crci/secours-evacuation.jpg', href: '/qui-sommes-nous#actions' },

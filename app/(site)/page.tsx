@@ -11,8 +11,8 @@ export default function HomePage() {
     <>
       <HeroSection />
       <StatsSection />
-      <ActionsSection />
       <LatestNews />
+      <ActionsSection />
       <CallToAction />
     </>
   )
